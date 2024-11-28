@@ -1,0 +1,14 @@
+server:
+  service:
+    type: LoadBalancer  # Expose the service as a LoadBalancer, suitable for cloud environments like AWS.
+  ingress:
+    enabled: true       # Enable the ingress for the service.
+    annotations:
+      alb.ingress.kubernetes.io/target-type: ip  # Target type for ALB is set to IP.
+      alb.ingress.kubernetes.io/scheme: internet-facing  # ALB is exposed to the internet.
+    ingressClassName: "alb"  # Specify the ingress class for ALB.
+  ingressGrpc:
+    enabled: true       # Enable GRPC ingress.
+    isAWSALB: true      # Indicates that this GRPC ingress is for AWS ALB.
+    ingressClassName: "alb"  # Specify the ingress class for the GRPC ingress.
+
