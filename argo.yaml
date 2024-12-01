@@ -5,7 +5,7 @@ configs:
     server.insecure: true
 server:
   service:
-    type: ClusterIP
+    type: ClusterIP  # Service type should be suitable for your needs (e.g., ClusterIP for internal use)
   ingress:
     enabled: true
     controller: aws
@@ -13,9 +13,11 @@ server:
     annotations:
       alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:211125448913:certificate/5e9548d2-ee5f-437b-b5b8-0676e3d9f9c8
       alb.ingress.kubernetes.io/scheme: internet-facing
-      alb.ingress.kubernetes.io/backend-protocol: HTTP
-      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":80}, {"HTTPS":443}]'
-      alb.ingress.kubernetes.io/ssl-redirect: '443'
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/backend-protocol: HTTP  # Or GRPC if your service uses gRPC
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":80}, {"HTTPS":443}]'  # Adjust listen ports
+      alb.ingress.kubernetes.io/ssl-redirect: '443'  # Redirect HTTP to HTTPS
     aws:
-      serviceType: ClusterIP  # <- Used with target-type: ip
-      backendProtocolVersion: GRPC
+      serviceType: ClusterIP  # This matches your service type; adjust as necessary
+      backendProtocolVersion: GRPC  # Use HTTP/HTTPS if not using gRPC
+
