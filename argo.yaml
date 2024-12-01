@@ -5,7 +5,7 @@ configs:
     server.insecure: true
 server:
   service:
-    type: NodePort
+    type: ClusterIP
   ingress:
     enabled: true
     controller: aws
@@ -13,14 +13,9 @@ server:
     annotations:
       alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:211125448913:certificate/5e9548d2-ee5f-437b-b5b8-0676e3d9f9c8
       alb.ingress.kubernetes.io/scheme: internet-facing
-      alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/backend-protocol: HTTP
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":80}, {"HTTPS":443}]'
       alb.ingress.kubernetes.io/ssl-redirect: '443'
     aws:
-      serviceType: NodePort # <- Used with target-type: ip
+      serviceType: ClusterIP  # <- Used with target-type: ip
       backendProtocolVersion: GRPC
-redis-ha:
-  # -- Enables the Redis HA subchart and disables the custom Redis single node deployment
-  enabled: true
-
